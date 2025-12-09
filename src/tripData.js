@@ -12,18 +12,11 @@ export const tripData = {
       "description": "精選五家距離 Chatrium Hotel Riverside Bangkok 交通便利、高評價的泰國蝦/海鮮餐廳。",
       "items": [
         {
-          "name": "Krua Khun Toi (ครัวคุณต้อย)",
-          "detail": "在地人推薦，價格實惠的泰國蝦及海鮮餐廳。",
-          "address": "422 Charoen Krung Rd, Bang Kho Laem, Bangkok (距離飯店約 1.5-2 公里)",
-          "phone": "+66 2 291 0352",
-          "hours": "11:00 - 22:00"
-        },
-        {
-          "name": "Baan Rim Naam (บ้านริมน้ำ)",
-          "detail": "昭披耶河畔餐廳，提供泰國蝦及其他傳統泰式料理，氛膊佳。",
-          "address": "257 Charoen Krung Rd, Wat Phraya Krai, Bang Kho Laem, Bangkok (距離飯店約 1.5 公里)",
-          "phone": "+66 2 289 1234",
-          "hours": "17:00 - 00:00"
+          "name": "Kodtalay The Riverfront Seafood Buffet",
+          "detail": "價格實惠的泰國蝦及海鮮餐廳(吃到飽)。",
+          "address": "11, 3 Charoen Krung 58 Alley, Yan Nawa, Sathon, Bangkok 10120泰國",
+          "phone": "+66 82 925 9979",
+          "hours": "14:00 - 23:00"
         },
         {
           "name": "T&K Seafood (T&K 海鮮)",
@@ -33,10 +26,10 @@ export const tripData = {
           "hours": "16:00 - 02:00"
         },
         {
-          "name": "Lung Yai Seafood (ลุงใหญ่ ซีฟู้ด)",
+          "name": "Loong Yai Thai Esarn (ลุงใหญ่ ไทย อีสาน)",
           "detail": "在地人光顧的海鮮攤，泰國蝦和烤魚很受歡迎。",
-          "address": "靠近 Krung Thep Bridge 一帶 (請使用 Google Map 導航確認確切位置)",
-          "phone": "無公開電話，請搜尋地址",
+          "address": "532 Thanon Asok - Din Daeng, Din Daeng, Bangkok 10400泰國",
+          "phone": "+66 2 642 4087",
           "hours": "通常為傍晚開始營業"
         },
         {
@@ -45,41 +38,29 @@ export const tripData = {
           "address": "Asiatique The Riverfront (Warehouse 1)",
           "phone": "+66 2 108 8122",
           "hours": "11:00 - 23:00"
+        },
+        {
+          "name": "Asiatique河濱夜市(เอเชียทีค เดอะ ริเวอร์ฟรอนท์)",
+          "detail": "飯店旁邊的夜市!。",
+          "address": "2194 ถ. เจริญกรุง Wat Phraya Krai, Bang Kho Laem, Bangkok 10120泰國",
+          "phone": "+66 92 246 0812",
+          "hours": "11點到傍晚營業"
         }
       ]
     },
     {
       "id": "massage",
-      "name": "💆 按摩店推薦",
-      "description": "參考 Klook 評價及熱門度，推薦幾家交通便利或評價高的按摩/Spa 店。",
-      "items": [
-        {
-          "name": "Let's Relax Spa",
-          "detail": "知名連鎖品牌，環境舒適，服務標準化。最近的分店推薦 **Asiatique The Riverfront** (離飯店很近)。",
-          "address": "Asiatique The Riverfront (多處分店)",
-          "phone": "+66 2 108 8170 (Asiatique 分店)",
-          "hours": "10:00 - 00:00"
-        },
-        {
-          "name": "Health Land Spa & Massage",
-          "detail": "大型連鎖 Spa，價格實惠且專業。推薦 **Sathorn** 或 **Asoke** 分店。",
-          "address": "Health Land Sathorn (最近的分店之一)",
-          "phone": "+66 2 677 8888",
-          "hours": "09:00 - 23:00"
-        },
-        {
-          "name": "Oasis Spa",
-          "detail": "高階 Spa 體驗，環境極佳，適合情侶或追求精緻服務者。",
-          "address": "Oasis Spa Bangkok Sukhumvit 31 (多處分店)",
-          "phone": "+66 2 262 2122",
-          "hours": "10:00 - 22:00"
-        },
-        {
-          "name": "RarinJinda Wellness Spa",
-          "detail": "優質 Spa 品牌，通常設在高級飯店內，提供精緻的泰式按摩服務。",
-          "address": "RarinJinda Wellness Spa Ploenchit (多處分店)",
-          "phone": "+66 2 651 5176",
-          "hours": "10:00 - 22:00"
+          "name": "💆 按摩/SPA 預訂連結",
+          "description": "點擊下方卡片即可直接前往 Klook 曼谷按摩專頁，快速比較價格與預訂。",
+          "items": [
+            {
+              // 這是唯一的「虛擬」項目，專門用來作為 Klook 連結卡片
+              "name": "Klook 曼谷按摩/SPA 預訂頁面",
+              "detail": "點擊前往 Klook，查看所有按摩店 (如 Let's Relax, Health Land 等) 的最新價格、優惠與評價，方便一站式預訂。",
+              // 我們將網站連結放在 address 欄位，方便 LocationCard 處理
+              "address": "https://www.klook.com/zh-TW/experiences/list/bangkok-massages-hot-springs/c4-cate20/", 
+              "phone": "N/A",
+              "hours": "線上預訂"
         }
       ]
     },
