@@ -1,90 +1,56 @@
 import { tripData } from './tripData'; // 導入您的旅遊數據
-import React, { useState } from 'react'; // 導入 React 狀態管理
-
-// --- 組件: 側邊導航欄 ---
-const Sidebar = ({ categories }) => {
-    return (
-        <aside className="w-64 fixed top-0 left-0 h-screen bg-indigo-600 p-4 text-white shadow-xl">
-            <h1 className="text-2xl font-bold mb-6 border-b border-indigo-400 pb-2">🇹🇭 曼谷行程速覽</h1>
-            <div className="mb-6 text-sm">
-                <p>🗓️ {tripData.tripInfo.dates}</p>
-                <p>🏨 {tripData.tripInfo.hotel}</p>
-            </div>
-            <nav className="space-y-2">
-                {categories.map((category) => (
-                    <a 
-                        key={category.id} 
-                        href={`#${category.id}`} 
-                        // 使用 Tailwind 樣式實現互動性
-                        className="block p-3 rounded-lg hover:bg-indigo-700 transition-colors"
-                    >
-                        {category.name}
-                    </a>
-                ))}
-            </nav>
-        </aside>
-    );
-};
+import React from 'react'; 
+// 注意：LocationCard 組件保持不變，但請確認它是正確的版本（包含模態框功能）
 
 // --- 組件: 地點卡片 (LocationCard) ---
+// 保持這個組件不動，確保它在 App 組件之上
 const LocationCard = ({ item }) => {
-    // 引入 React 狀態 hook
     const [isOpen, setIsOpen] = React.useState(false);
-
     const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
 
     return (
         <div className="relative h-full">
-            {/* 點擊觸發區塊 */}
             <div 
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-indigo-400 cursor-pointer h-full flex flex-col justify-between"
+                className="bg-white p-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-indigo-400 cursor-pointer h-full flex flex-col justify-between"
                 onClick={handleOpen}
             >
                 <div>
-                    <h4 className="text-xl font-semibold text-indigo-700 mb-2">{item.name}</h4>
-                    <p className="text-gray-600 mb-3 text-sm italic line-clamp-2">{item.detail}</p>
+                    <h4 className="text-lg font-semibold text-indigo-700 mb-1 line-clamp-1">{item.name}</h4>
+                    <p className="text-gray-600 mb-2 text-xs italic line-clamp-2">{item.detail}</p>
                 </div>
-                
-                {/* 預覽資訊 (只顯示地址) */}
-                <div className="text-xs space-y-1 mt-4 pt-3 border-t border-gray-100">
+                <div className="text-xs space-y-1 mt-2 pt-2 border-t border-gray-100">
                     <p className="flex items-start">
-                        <strong className="w-12 text-gray-500">📍 地址:</strong> 
+                        <strong className="w-10 text-gray-500">📍 地址:</strong> 
                         <span className="text-gray-700 truncate">{item.address}</span>
                     </p>
                 </div>
-                
                 <span className="text-xs mt-2 text-indigo-500 font-medium">點擊查看詳情...</span>
             </div>
 
-            {/* 浮現的模態框 (Modal) - 只有當 isOpen 為 true 時顯示 */}
             {isOpen && (
                 <div 
                     className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 p-4"
-                    onClick={handleClose} // 點擊背景關閉
+                    onClick={handleClose}
                 >
                     <div 
-                        className="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8 relative transform transition-all scale-100"
-                        onClick={(e) => e.stopPropagation()} // 阻止點擊模態框內部時關閉
+                        className="bg-white rounded-lg shadow-2xl max-w-lg w-full p-6 relative"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        {/* 關閉按鈕 */}
                         <button 
                             className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl"
                             onClick={handleClose}
                         >
-                            &times;
+                            ×
                         </button>
-                        
-                        {/* 詳細內容標題 */}
-                        <h3 className="text-3xl font-bold text-indigo-700 mb-4 border-b pb-2">{item.name}</h3>
-                        <p className="text-gray-600 mb-6 text-base italic">{item.detail}</p>
-                        
-                        {/* 詳細內容清單 */}
-                        <div className="space-y-4 text-sm">
+                        <h3 className="text-2xl font-bold text-indigo-700 mb-3 border-b pb-1">{item.name}</h3>
+                        <p className="text-gray-600 mb-4 text-sm italic">{item.detail}</p>
+                        <div className="space-y-3 text-sm">
                             <p className="flex items-start">
                                 <strong className="w-20 text-gray-500">📍 地址:</strong> 
                                 <a 
-                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`} 
+                                    href={mapsLink}
                                     target="_blank" 
                                     rel="noopener noreferrer" 
                                     className="text-blue-500 hover:text-blue-700 underline break-words"
@@ -105,45 +71,73 @@ const LocationCard = ({ item }) => {
         </div>
     );
 };
+// --- LocationCard 組件結束 ---
 
 
-// --- 主要應用程式組件 ---
+// --- 主要應用程式組件 (App) ---
 function App() {
-    const { categories } = tripData; // 解構出分類數據
+    const { tripInfo, categories } = tripData; 
+    
+    // 🎯 新增狀態：追蹤當前選中的分類 ID
+    const [selectedCategory, setSelectedCategory] = React.useState(categories[0].id);
+
+    // 找到當前選中的分類物件
+    const currentCategory = categories.find(cat => cat.id === selectedCategory);
 
     return (
-        <div className="flex bg-gray-50 min-h-screen">
-            {/* 側邊導航 */}
-            <Sidebar categories={categories} />
+        <div className="bg-gray-50 min-h-screen">
+            
+            {/* 頂部導航/標籤頁 (固定在最上方) */}
+            <header className="fixed top-0 left-0 right-0 z-20 bg-white shadow-xl">
+                {/* 標題與簡介 - 適合手機頂部 */}
+                <div className="p-3 border-b border-indigo-100">
+                    <h2 className="text-xl font-extrabold text-indigo-800 line-clamp-1">🇹🇭 曼谷行程助手</h2>
+                    <p className="text-xs text-gray-500 mt-1">飯店：{tripInfo.hotel}</p>
+                </div>
+
+                {/* 分類選項卡 (Tabs) */}
+                <nav className="flex overflow-x-auto whitespace-nowrap border-b border-indigo-200">
+                    {categories.map((category) => (
+                        <button
+                            key={category.id}
+                            onClick={() => setSelectedCategory(category.id)}
+                            className={`
+                                p-3 text-sm font-medium transition-colors border-b-2
+                                ${selectedCategory === category.id
+                                    ? 'text-indigo-600 border-indigo-600 bg-indigo-50/50' // 選中樣式
+                                    : 'text-gray-500 border-transparent hover:text-indigo-600' // 未選中樣式
+                                }
+                            `}
+                        >
+                            {category.name}
+                        </button>
+                    ))}
+                </nav>
+            </header>
 
             {/* 主要內容區 */}
-            <main className="flex-1 ml-64 p-8 main-content">
+            <main className="pt-[110px] p-4"> {/* pt-[110px] 確保內容在固定頂部導航下方 */}
                 
-                <header className="mb-10 p-6 bg-white rounded-lg shadow-xl sticky top-0 z-10">
-                    <h2 className="text-4xl font-extrabold text-indigo-800">曼谷行程規劃助手</h2>
-                    <p className="mt-2 text-lg text-gray-600">飯店：{tripData.tripInfo.hotel}</p>
-                </header>
-
-                {/* 根據 JSON 資料動態渲染每個分類區塊 */}
-                {categories.map((category) => (
+                {/* 顯示當前選中的分類內容 */}
+                {currentCategory && (
                     <section 
-                        key={category.id} 
-                        id={category.id} 
-                        className="mb-16 pt-4 border-l-4 border-indigo-200 pl-4" // 左邊邊框增加視覺層次
+                        key={currentCategory.id} 
+                        id={currentCategory.id} 
+                        className="mb-10 pt-2 border-l-4 border-indigo-200 pl-4 bg-white p-4 rounded-lg shadow-md"
                     >
-                        <h3 className={`text-3xl font-bold text-gray-800 mb-6 border-b-4 border-indigo-500 pb-2`}>
-                            {category.name}
+                        <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                            {currentCategory.name}
                         </h3>
-                        <p className="text-gray-600 mb-8">{category.description}</p>
+                        <p className="text-gray-600 mb-6 text-sm">{currentCategory.description}</p>
 
-                        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid gap-6 sm:grid-cols-2"> {/* 手機上改為兩欄，平板/電腦上三欄 */}
                             {/* 渲染該分類下的所有地點卡片 */}
-                            {category.items.map((item, index) => (
+                            {currentCategory.items.map((item, index) => (
                                 <LocationCard key={index} item={item} />
                             ))}
                         </div>
                     </section>
-                ))}
+                )}
             </main>
         </div>
     );
