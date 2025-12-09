@@ -17,8 +17,9 @@ const LocationCard = ({ item }) => {
                 onClick={handleOpen}
             >
                 <div>
-                    <h4 className="text-lg font-semibold text-indigo-700 mb-1 line-clamp-1">{item.name}</h4>
-                    <p className="text-gray-600 mb-2 text-xs italic line-clamp-2">{item.detail}</p>
+                    // 修正後的標題和描述
+                    <h4 className="text-xl font-semibold text-indigo-700 mb-1 line-clamp-1">{item.name}</h4>
+                    <p className="text-gray-600 mb-2 text-sm italic line-clamp-2">{item.detail}</p>
                 </div>
                 <div className="text-xs space-y-1 mt-2 pt-2 border-t border-gray-100">
                     <p className="flex items-start">
@@ -116,7 +117,7 @@ function App() {
             </header>
 
             {/* 主要內容區 */}
-            <main className="pt-[110px] p-4"> {/* pt-[110px] 確保內容在固定頂部導航下方 */}
+            <main className="pt-[120px] p-4"> {/* pt-[110px] 確保內容在固定頂部導航下方 */}
                 
                 {/* 顯示當前選中的分類內容 */}
                 {currentCategory && (
@@ -130,7 +131,7 @@ function App() {
                         </h3>
                         <p className="text-gray-600 mb-6 text-sm">{currentCategory.description}</p>
 
-                        <div className="grid gap-6 sm:grid-cols-2"> {/* 手機上改為兩欄，平板/電腦上三欄 */}
+                        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2"> {/* 明確設定手機為單欄，平板以上兩欄 */}
                             {/* 渲染該分類下的所有地點卡片 */}
                             {currentCategory.items.map((item, index) => (
                                 <LocationCard key={index} item={item} />
