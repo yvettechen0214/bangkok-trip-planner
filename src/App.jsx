@@ -117,7 +117,7 @@ function App() {
             </header>
 
             {/* 主要內容區 */}
-            <main className="pt-[120px] p-4"> {/* pt-[110px] 確保內容在固定頂部導航下方 */}
+            <main className="pt-[140px] p-4"> {/* pt-[110px] 確保內容在固定頂部導航下方 */}
                 
                 {/* 顯示當前選中的分類內容 */}
                 {currentCategory && (
@@ -131,12 +131,17 @@ function App() {
                         </h3>
                         <p className="text-gray-600 mb-6 text-sm">{currentCategory.description}</p>
 
-                        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2"> {/* 明確設定手機為單欄，平板以上兩欄 */}
+                        <div className="grid gap-6 grid-cols-1"> {/* 確保所有尺寸都是單欄顯示，解決寬度溢出 */}
+                             {/* 渲染該分類下的所有地點卡片 */}
+                            {currentCategory.items.map((item, index) => (
+                                    <LocationCard key={index} item={item} />
+                            ))}
+                        </div>
                             {/* 渲染該分類下的所有地點卡片 */}
                             {currentCategory.items.map((item, index) => (
                                 <LocationCard key={index} item={item} />
                             ))}
-                        </div>
+                
                     </section>
                 )}
             </main>
